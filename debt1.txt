@@ -1,0 +1,20 @@
+import scrapy
+
+
+class GdpDebtSpider(scrapy.Spider):
+    name = 'gdp_debt'
+    allowed_domains = ['worldpopulationreview.com']
+    start_urls = ['https://worldpopulationreview.com/countries/countries-by-national-debt']
+
+    def parse(self, response):
+
+        name = response.xpath("//table/tbody/tr/td/a/text()").getall()
+        debt = response.xpath("//table/tbody/tr/td[2]/text()").getall()
+        pop = response.xpath("//table/tbody/tr/td[3]/text()").getall()
+        
+
+        yield {
+            'name': name,
+            'National_debt': debt,
+            'Population': pop   
+        }
